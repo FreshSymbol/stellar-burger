@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 import { createOrderApi, feedsApi, ordersApi } from './actions';
 import { TFeedsResponse } from '@api';
+import { To } from 'react-router-dom';
 
 type TinitialState = {
   orders: TOrder[];
@@ -30,10 +31,8 @@ const ordersSlice = createSlice({
   name: 'orders',
   initialState,
   reducers: {
-    findOrderData: (state, actions: PayloadAction<string>) => {
-      state.orderData = state.feeds.orders.find(
-        (order) => order.number === +actions.payload
-      );
+    setOrderData: (state, actions: PayloadAction<TOrder>) => {
+      state.orderData = actions.payload;
     },
     setOrderRequest: (state, actions: PayloadAction<boolean>) => {
       state.orderRequest = actions.payload;
@@ -45,7 +44,7 @@ const ordersSlice = createSlice({
   selectors: {
     getOrders: (state) => state.orders,
     getFeeds: (state) => state.feeds,
-    getAllOrders: (state) => state.feeds.orders,
+    getAllOrders: (state) => state.feeds?.orders,
     getOrderData: (state) => state.orderData,
     getOrderRequest: (state) => state.orderRequest,
     getNewOrderData: (state) => state.newOrderData
@@ -83,7 +82,7 @@ const ordersSlice = createSlice({
       });
   }
 });
-export const { findOrderData, setOrderRequest, resetNewOrderData } =
+export const { setOrderData, setOrderRequest, resetNewOrderData } =
   ordersSlice.actions;
 export const {
   getFeeds,
