@@ -15,31 +15,36 @@ import styles from './app.module.css';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
-import { useDispatch, useSelector } from '../../services/store';
-import { getOrderData } from '../../services/slices/orders/ordersSlice';
+import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
 import { checkAuth } from '../../services/slices/auth/actions';
+import { useSelector } from 'react-redux';
+import { getOrderData } from '../../services/slices/orders/ordersSlice';
+import { ingredientsApi } from '../../services/slices/ingredients/actions';
+import { feedsApi } from '../../services/slices/orders/actions';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(checkAuth());
-  }, []);
+    dispatch(ingredientsApi());
+    dispatch(feedsApi());
+  }, [dispatch]);
 
   const navigate = useNavigate();
   const onClose = () => {
     navigate(-1);
   };
-  const orderTitle = '#' + useSelector(getOrderData)?.number;
   const location = useLocation();
   const backgroundLocation = location.state?.background;
+  const orderTitle = '#' + useSelector(getOrderData)?.number;
 
   return (
     <div className={styles.app}>
       <AppHeader />
       <Routes location={backgroundLocation || location}>
-        <Route path='/' element={<ConstructorPage />} />
+        <Route index element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route
           path='/login'
