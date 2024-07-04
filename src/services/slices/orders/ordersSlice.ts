@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 import { createOrderApi, feedsApi, ordersApi } from './actions';
 import { TFeedsResponse } from '@api';
-import { To } from 'react-router-dom';
 
 type TinitialState = {
   orders: TOrder[];
@@ -13,7 +12,7 @@ type TinitialState = {
   orderRequest: boolean;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
   orders: [],
   error: null,
   feeds: {

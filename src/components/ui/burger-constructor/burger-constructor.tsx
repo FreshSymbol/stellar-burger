@@ -36,7 +36,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         Выберите булки
       </div>
     )}
-    <ul className={styles.elements}>
+    <ul className={styles.elements} data-cy='constructor-ingredients'>
       {constructorItems.ingredients.length > 0 ? (
         constructorItems.ingredients.map(
           (item: TConstructorIngredient, index: number) => (
@@ -79,6 +79,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         <CurrencyIcon type='primary' />
       </div>
       <Button
+        data-cy='create-order'
         htmlType='button'
         type='primary'
         size='large'
@@ -97,6 +98,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
       <Modal
         onClose={closeOrderModal}
         title={orderRequest ? 'Оформляем заказ...' : ''}
+        data-cy={orderRequest ? 'order-' + orderModalData.number : ''}
       >
         <OrderDetailsUI orderNumber={orderModalData.number} />
       </Modal>

@@ -19,7 +19,7 @@ type TInitialState = {
   ingredientDetails?: TIngredient | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   isLoading: false,
   ingredients: [],
   bun: [],
